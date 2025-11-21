@@ -161,8 +161,8 @@ const BaseConfig: React.FC<ChatProps> = ({
     },
     {
       modelId: 'null',
-      modelName: '星火大模型 Spark X1',
-      modelDomain: 'x1',
+      modelName: '星火大模型 Spark V4.0 Ultra',
+      modelDomain: 'spark',
       model: '', // 将在 modelOptions 加载后初始化
       modelIcon:
         'https://openres.xfyun.cn/xfyundoc/2025-09-24/e9b74fbb-c2d6-4f4a-8c07-0ea7f03ee03a/1758681839941/icon.png',
@@ -1390,7 +1390,17 @@ const BaseConfig: React.FC<ChatProps> = ({
                       .filter((key: any) => choosedAlltool[key])
                       .join(','),
                     prologue: prologue,
-                    model: model,
+                    model: (() => {
+                      const selectedModel = findModelOptionByUniqueKey(model);
+                      return selectedModel?.modelDomain || model;
+                    })(),
+                    modelId: (() => {
+                      const selectedModel = findModelOptionByUniqueKey(model);
+                      return selectedModel?.isCustom
+                        ? selectedModel.modelId
+                        : null;
+                    })(),
+                    isCustom: findModelOptionByUniqueKey(model)?.isCustom,
                     prompt: prompt,
                     // 人设相关字段
                     enablePersonality: personalityData.enablePersonality,
@@ -1439,7 +1449,17 @@ const BaseConfig: React.FC<ChatProps> = ({
                       .filter((key: any) => choosedAlltool[key])
                       .join(','),
                     prologue: prologue,
-                    model: model,
+                    model: (() => {
+                      const selectedModel = findModelOptionByUniqueKey(model);
+                      return selectedModel?.modelDomain || model;
+                    })(),
+                    modelId: (() => {
+                      const selectedModel = findModelOptionByUniqueKey(model);
+                      return selectedModel?.isCustom
+                        ? selectedModel.modelId
+                        : null;
+                    })(),
+                    isCustom: findModelOptionByUniqueKey(model)?.isCustom,
                     prompt: prompt,
                     // 人设相关字段
                     enablePersonality: personalityData.enablePersonality,
